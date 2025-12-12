@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "jobTitle": "AI Engineering Intern",
+        "company": "Certis Group",
+        "description": "Built complex agentic AI workflows and fine-tuned LLMs for specific tasks.",
+        "startDate": "July 2025",
+        "endDate": "Dec 2025",
+        "companyWeb": "https://www.certisgroup.com/",
+        "companyImg": "/company_images/certis.jpg"
+    },
+    {
+        "id": 2,
+        "jobTitle": "Full Stack Developer Intern",
+        "company": "Oneberry",
+        "description": "Developed a website to manage and monitor temperature/humidity sensors in MRTs, improving data visibility and operational efficiency.",
+        "startDate": "May 2024",
+        "endDate": "Aug 2024",
+        "companyWeb": "https://oneberry.com/",
+        "companyImg": "/company_images/oneberry.webp"
+    }
+]
