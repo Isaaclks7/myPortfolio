@@ -7,7 +7,9 @@
         "startDate": "July 2025",
         "endDate": "Dec 2025",
         "companyWeb": "https://www.certisgroup.com/",
-        "companyImg": "/company_images/certis.jpg"
+        "companyImg": "/company_images/certis.jpg",
+        "zoom": "1.25",
+        "position": "12px 25px"
     },
     {
         "id": 2,
@@ -17,6 +19,8 @@
         "startDate": "May 2024",
         "endDate": "Aug 2024",
         "companyWeb": "https://oneberry.com/",
-        "companyImg": "/company_images/oneberry.webp"
+        "companyImg": "/company_images/oneberry.jpg",
+        "zoom": "1.4",
+        "position": "12px 10px"
     }
 ]

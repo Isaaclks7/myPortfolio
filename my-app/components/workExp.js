@@ -2,27 +2,35 @@
 import Image from "next/image"
 import { useState } from "react"
 import { ChevronDown, ChevronRight } from "@deemlol/next-icons";
+import useThemeStore from "@/stores" 
 
 
 export default function WorkComponent({
-    jobTitle, company, description, startDate, endDate, companyWeb, companyImg 
+    jobTitle, company, description, startDate, endDate, companyWeb, companyImg, zoom, position
 }) {
     const [isOpen, setIsOpen] = useState(false);
+    const { darkMode, toggleDarkMode } = useThemeStore()
 
     return (
         <button
             onClick={() => setIsOpen(!isOpen)}
-            className="mb-4 rounded-lg w-full border hover:shadow-xl hover:border hover:border-white hover:border-1 cursor-pointer"
+            className={`mb-4 rounded-lg w-full hover:shadow-xl hover:border ${darkMode ? "hover:border-white" : "hover:border-black"} hover:border-1 cursor-pointer`}
         >
             <div className="rounded-full flex flex-row items-start p-1">
-				<Image
-					className="rounded-lg object-contain bg-white"
-					src={companyImg}
-					alt="Company Logo"
-					width={100}
-					height={25}
-				/>
-                <div className="flex flex-col text-white px-3 w-full">
+                <span className="relative border border-gray-300 p-2 rounded-[50%] inline-block overflow-hidden bg-white" style={{width: '42px', height: '42px'}}>
+                    <Image
+                        src={companyImg}
+                        alt="Company Logo"
+                        width={100}
+                        height={100}
+                        className="object-cover"
+                        style={{
+                            transform: `scale(${zoom})`,
+                            transformOrigin: position
+                        }}
+                    />
+                </span>
+                <div className={`flex flex-col ${darkMode ? "text-white" : "text-black"} px-3 w-full`}>
                     <div className="flex justify-between text-sm">
                         <div className="flex font-bold items-center gap-1 text-left">
 							<span className="whitespace-nowrap">
@@ -30,9 +38,9 @@ export default function WorkComponent({
 							</span>
 							<span>
 								{isOpen ?
-									<ChevronRight size={16}/>
-									:
 									<ChevronDown size={16}/>
+									:
+									<ChevronRight size={16}/>
 								}
 							</span>
                         </div>
@@ -43,10 +51,12 @@ export default function WorkComponent({
                     <div className="text-sm text-left">
                         {jobTitle}
                     </div>
-                    {isOpen ? "" :
+                    {isOpen ?
                         <div className="text-sm text-left mt-1">
                             {description}
                         </div>
+                        :
+                        ""
                     }
                 </div>
             </div>

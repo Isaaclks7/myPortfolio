@@ -8,7 +8,9 @@
         "startDate": "Aug 2023",
         "endDate": "May 2027",
         "schoolWeb": "https://nus.edu.sg/",
-        "schoolImg": "/company_images/certis.jpg"
+        "schoolImg": "/company_images/nus.webp",
+        "zoom": "1.7",
+        "position": "11px 19px"
     },
     {
         "id": 2,
@@ -19,6 +21,8 @@
         "startDate": "Jan 2019",
         "endDate": "Dec 2020",
         "schoolWeb": "https://www.acjc.moe.edu.sg/",
-        "schoolImg": "/company_images/certis.jpg"
+        "schoolImg": "/company_images/acjc.png",
+        "zoom": "5.8",
+        "position": "0.9px 0.9px"
     }
 ]

@@ -2,13 +2,21 @@
 
 import { useEffect, useRef } from 'react'
 import Script from 'next/script'
+import useThemeStore from '@/stores'
 
 export default function VantaBackground() {
   const vantaRef = useRef(null)
   const vantaEffect = useRef(null)
+  const { darkMode, toggleDarkMode } = useThemeStore()
+  const bgColor = darkMode ? 0x8031d : 0xefefef
 
   useEffect(() => {
-    if (!window.VANTA || vantaEffect.current) return
+    if (!window.VANTA) return
+
+    if (vantaEffect.current) {
+      vantaEffect.current.destroy()
+      vantaEffect.current = null
+    }
 
     vantaEffect.current = window.VANTA.DOTS({
       el: vantaRef.current,
@@ -21,9 +29,9 @@ export default function VantaBackground() {
       scaleMobile: 1.0,
       color: 0x0f10d4,
       color2: 0x1010d1,
-      backgroundColor: 0x060606,
+      backgroundColor: bgColor,
       size: 3.1,
-      spacing: 28.0,
+      spacing: 25.0,
       showLines: false,
     })
 
@@ -33,7 +41,7 @@ export default function VantaBackground() {
         vantaEffect.current = null
       }
     }
-  }, [])
+  }, [darkMode])
 
   return (
     <>

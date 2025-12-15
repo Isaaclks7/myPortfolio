@@ -11,8 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className="w-full h-full relative">
-        <VantaBackground/>
+      <body className="w-full h-full relative">    
         <div className="relative z-10">
           {children}
         </div>
