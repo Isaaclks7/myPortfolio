@@ -4,6 +4,7 @@ import education from "@/education.json"
 import Image from "next/image"
 import AboutMe from "../components/aboutMe"
 import Education from "../components/education"
+import Skills from "../components/skills"
 
 export default function Home() {
   return (
@@ -51,12 +52,17 @@ export default function Home() {
           key={item.id}
           major={item.major}
           school={item.school}
+          schoolShort={item.schoolShort}
           grade={item.grade}
           startDate={item.startDate}
           endDate={item.endDate}
-          companyWeb={item.companyWeb}
-          companyImg={item.companyImg}/>
+          schoolWeb={item.schoolWeb}
+          schoolImg={item.schoolImg}/>
       ))}
+      <h1 className="flex justify-start mb-4 font-bold text-xl text-white">
+        SKILLS
+      </h1>
+      <Skills/>
     </div>
   );
 }

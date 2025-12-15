@@ -40,12 +40,12 @@ export default function WorkComponent({
 							{startDate} - {endDate}
 						</div>
                     </div>
-                    <div className="text-sm flex">
+                    <div className="text-sm text-left">
                         {jobTitle}
                     </div>
                     {isOpen ? "" :
-                        <div className="text-sm flex mt-1">
-                            <span className="text-left">{description}</span>
+                        <div className="text-sm text-left mt-1">
+                            {description}
                         </div>
                     }
                 </div>

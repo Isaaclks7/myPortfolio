@@ -5,7 +5,7 @@ import { ChevronDown, ChevronRight } from "@deemlol/next-icons";
 
 
 export default function Education({
-    major, school, grade, startDate, endDate, schoolWeb, schoolImg 
+    major, school, schoolShort, grade, startDate, endDate, schoolWeb, schoolImg 
 }) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -25,8 +25,11 @@ export default function Education({
                 <div className="flex flex-col text-white px-3 w-full">
                     <div className="flex justify-between text-sm">
                         <div className="flex font-bold items-center gap-1 text-left">
-							<span className="whitespace-nowrap">
+							<span className="hidden sm:inline">
                                 {school} 
+							</span>
+							<span className="inline sm:hidden">
+                                {schoolShort} 
 							</span>
 							<span>
 								{isOpen ?
@@ -40,7 +43,7 @@ export default function Education({
 							{startDate} - {endDate}
 						</div>
                     </div>
-                    <div className="text-sm flex">
+                    <div className="flex text-left text-sm">
                         {major}
                     </div>
                     {isOpen ? "" :

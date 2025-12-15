@@ -2,7 +2,7 @@
 export default function AboutMe() {
     return (
         <div className="text-white flex flex-row justify-center text-sm mb-4">
-            ADWADSDKJADBHWADAVDJGSAVDASVHDGA
+            To be added...
         </div>
     );
 }
