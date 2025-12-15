@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "school": "National University of Singapore (NUS)",
+        "major": "Bachelor's Degree in Computer Engineering",
+        "grade": "4.48 (as of Y3S2)",
+        "startDate": "Aug 2023",
+        "endDate": "May 2027",
+        "schoolWeb": "https://nus.edu.sg/",
+        "schoolImg": "/company_images/certis.jpg"
+    },
+    {
+        "id": 2,
+        "school": "ACJC",
+        "major": "H2 Math, H2 Physics, H2 Chem, H1 Econs",
+        "grade": "82.5 RP",
+        "startDate": "Jan 2019",
+        "endDate": "Dec 2020",
+        "schoolWeb": "https://www.acjc.moe.edu.sg/",
+        "schoolImg": "/company_images/certis.jpg"
+    }
+]
