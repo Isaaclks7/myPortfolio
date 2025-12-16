@@ -9,12 +9,14 @@ import Skills from "@/components/skills"
 import VantaBackground from "./vantaBackground";
 import { Moon, Sun, Github, Linkedin, Mail  } from "@deemlol/next-icons";
 import useThemeStore from "@/stores" 
+import PhotoViewer from "@/components/photoViewer"
+import projectImages from "@/public/projectImages.json"
 
 export default function Home() {
   const { darkMode, toggleDarkMode } = useThemeStore()
 
   return (
-    <div className="px-4">
+    <div className="px-4 md:px-20 lg:px-50 xl:px-75">
       <VantaBackground isDarkMode={darkMode}/>
       <h1 className={`flex flex-col py-6 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         <div className="flex flex-col items-center">
@@ -91,12 +93,12 @@ export default function Home() {
       <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         PROJECTS
       </h1>
-      ...
+      <PhotoViewer photos={projectImages}/>
       <h1 className="fixed flex text-white left-0 right-0 border-t shadow-xl justify-center gap-8 bottom-0 py-2 bg-black">
         <button className="cursor-pointer" onClick={() => window.open("https://github.com/isaaclks7", "_blank")}>
           <Github/>
         </button>
-        <button className="cursor-pointer" onClick={() => window.open("https://sg.linkedin.com/in/isaaclks7", "_blank")}>
+        <button className="cursor-pointer" onClick={() => window.open("www.linkedin.com/in/isaaclks7", "_blank")}>
           <Linkedin/>
         </button>
         <button className="cursor-pointer">
