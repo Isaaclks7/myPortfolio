@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="px-4">
       <VantaBackground isDarkMode={darkMode}/>
-      <h1 className="flex flex-col py-6 font-bold text-xl text-white">
+      <h1 className={`flex flex-col py-6 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         <div className="flex flex-col items-center">
           <span className="flex relative w-32 h-32 overflow-hidden flex-row justify-center">
             <Image
@@ -92,7 +92,7 @@ export default function Home() {
         PROJECTS
       </h1>
       ...
-      <h1 className="fixed flex text-white left-0 right-0 border-t justify-center gap-8 bottom-0 py-2 bg-black">
+      <h1 className="fixed flex text-white left-0 right-0 border-t shadow-xl justify-center gap-8 bottom-0 py-2 bg-black">
         <button className="cursor-pointer" onClick={() => window.open("https://github.com/isaaclks7", "_blank")}>
           <Github/>
         </button>
