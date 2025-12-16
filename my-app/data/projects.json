@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "name": "Bomb Go Off",
+        "description": "Minigame",
+        "technologies": "FPGA, Verilog, Digital Design, Logic Gates",
+        "photos": [
+            "/project_images/flow_free.jpg",
+            "/project_images/lose.MOV",
+            "/project_images/maze.jpg",
+            "/project_images/start_screen.jpg",
+            "/project_images/success.MOV",
+            "/project_images/victory.jpg",
+            "/project_images/warning.jpg",
+            "/project_images/wire_cut.jpg"
+        ],
+        "startDate": "Mar 2025",
+        "endDate": "May 2025",
+        "projectImg": "/project_images/bomb.jpg",
+        "zoom": "1.7",
+        "position": "13px 12px"
+    },
+    {
+        "id": 2,
+        "name": "NurseSched",
+        "description": "CLI Assistant",
+        "technologies": "Java, OOP, Abstraction, Inheritance",
+        "photos": ["/company_images/certis.jpg", "/company_images/oneberry.jpg", "/company_images/nus.webp"],
+        "startDate": "Mar 2025",
+        "endDate": "May 2025",
+        "projectImg": "/project_images/nursesched.avif",
+        "zoom": "1.5",
+        "position": "11px 11px"
+    }
+]
