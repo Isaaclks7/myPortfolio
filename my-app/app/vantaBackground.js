@@ -11,7 +11,7 @@ export default function VantaBackground() {
   const bgColor = darkMode ? 0x8031d : 0xefefef
 
   useEffect(() => {
-    if (!window.VANTA) return
+    if (!window.VANTA || !vantaRef.current) return
 
     if (vantaEffect.current) {
       vantaEffect.current.destroy()
@@ -47,7 +47,7 @@ export default function VantaBackground() {
     <>
       <div
         ref={vantaRef}
-        className="w-full h-screen fixed inset-0 -z-10"
+        className="w-screen h-screen fixed inset-0 -z-10"
       />
       <Script
         src="/three.r134.min.js"

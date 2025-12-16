@@ -11,7 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className="w-full h-full relative">    
+      <body className="w-full h-full relative overflow-x-hidden">    
         <div className="relative z-10">
           {children}
         </div>

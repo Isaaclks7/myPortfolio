@@ -1,13 +1,13 @@
 "use client"
 import WorkComponent from "@/components/workExp";
-import experience from "@/experience.json"
-import education from "@/education.json"
+import experience from "@/data/experience.json"
+import education from "@/data/education.json"
 import Image from "next/image"
 import AboutMe from "@/components/aboutMe"
 import Education from "@/components/education"
 import Skills from "@/components/skills"
 import VantaBackground from "./vantaBackground";
-import { Moon, Sun } from "@deemlol/next-icons";
+import { Moon, Sun, Github, Linkedin, Mail  } from "@deemlol/next-icons";
 import useThemeStore from "@/stores" 
 
 export default function Home() {
@@ -16,12 +16,9 @@ export default function Home() {
   return (
     <div className="px-4">
       <VantaBackground isDarkMode={darkMode}/>
-      <h1 className="flex flex-col mb-4 font-bold text-xl text-white">
-        <span className="flex flex-row justify-center mb-4">
-          Work in progress...
-        </span>
+      <h1 className="flex flex-col py-6 font-bold text-xl text-white">
         <div className="flex flex-col items-center">
-          <span className="flex w-32 h-32 overflow-hidden flex-row justify-center">
+          <span className="flex relative w-32 h-32 overflow-hidden flex-row justify-center">
             <Image
               src="/profile_pic.jpg"
               alt="Profile picture"
@@ -30,10 +27,11 @@ export default function Home() {
               className={`rounded-full object-cover mb-2 border-2 ${darkMode ? "border-white" : "border-black"}`}
               style={{
                 objectPosition: "55%",
+                transform: `scale (5)`
               }}
             />
           </span>
-          <p className="flex flex-row justify-between bg-green-300">
+          <p className="flex flex-row justify-between gap-2">
             <span>
               Lim Kai Sheng Isaac
             </span>
@@ -49,11 +47,11 @@ export default function Home() {
           </p>
         </div>
       </h1>
-      <h1 className={`flex justify-center mb-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
+      <h1 className={`flex justify-center py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         ABOUT
       </h1>
       <AboutMe/>
-      <h1 className={`flex justify-start mb-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
+      <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         WORK EXPERIENCES
       </h1>
       {experience.map((item) => (
@@ -69,7 +67,7 @@ export default function Home() {
           zoom={item.zoom}
           position={item.position}/>
       ))}
-      <h1 className={`flex justify-start mb-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
+      <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         EDUCATION
       </h1>
       {education.map((item) => (
@@ -86,10 +84,25 @@ export default function Home() {
           zoom={item.zoom}
           position={item.position}/>
       ))}
-      <h1 className={`flex justify-start mb-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
+      <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         SKILLS
       </h1>
       <Skills/>
+      <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
+        PROJECTS
+      </h1>
+      ...
+      <h1 className="fixed flex text-white left-0 right-0 border-t justify-center gap-8 bottom-0 py-2 bg-black">
+        <button className="cursor-pointer" onClick={() => window.open("https://github.com/isaaclks7", "_blank")}>
+          <Github/>
+        </button>
+        <button className="cursor-pointer" onClick={() => window.open("https://sg.linkedin.com/in/isaaclks7", "_blank")}>
+          <Linkedin/>
+        </button>
+        <button className="cursor-pointer">
+          <Mail/>
+        </button>
+      </h1>
     </div>
   );
 }
