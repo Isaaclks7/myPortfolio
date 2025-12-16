@@ -7,7 +7,7 @@ export default function Skills() {
     return(
         <div className={`flex flex-wrap ${darkMode ? "text-white" : "text-black"} gap-2 mb-4`}>
             {skills.map((skill, index) => (
-                <p key={index} className="border rounded-lg px-2 py-1">
+                <p key={index} className="border rounded-lg px-2 py-1 shadow-lg">
                     {skill}
                 </p>
             ))

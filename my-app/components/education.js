@@ -13,7 +13,7 @@ export default function Education({
     return (
         <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`mb-4 rounded-lg w-full hover:shadow-xl hover:border ${darkMode ? "hover:border-white" : "hover:border-black"} hover:border-1 cursor-pointer`}
+            className={`mb-4 rounded-lg w-full hover:shadow-xl border border-transparent ${darkMode ? "hover:border-white" : "hover:border-black"} cursor-pointer`}
         >
             <div className="rounded-full flex flex-row items-start p-1">
                 <span className="relative border border-gray-300 p-2 rounded-[50%] inline-block overflow-hidden bg-white" style={{width: '42px', height: '42px'}}>
