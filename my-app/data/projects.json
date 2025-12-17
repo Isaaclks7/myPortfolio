@@ -2,17 +2,17 @@
     {
         "id": 1,
         "name": "Bomb Go Off",
-        "description": "Minigame",
-        "technologies": "FPGA, Verilog, Digital Design, Logic Gates",
+        "description": "Bomb defusal minigame",
+        "technologies": "Built with Verilog",
         "photos": [
-            "/project_images/flow_free.jpg",
-            "/project_images/lose.MOV",
-            "/project_images/maze.jpg",
             "/project_images/start_screen.jpg",
-            "/project_images/success.MOV",
+            "/project_images/wire_cut.jpg",
+            "/project_images/flow_free.jpg",
+            "/project_images/maze.jpg",
             "/project_images/victory.jpg",
-            "/project_images/warning.jpg",
-            "/project_images/wire_cut.jpg"
+            "/project_images/success.mp4",
+            "/project_images/lose.mp4",
+            "/project_images/warning.jpg"
         ],
         "startDate": "Mar 2025",
         "endDate": "May 2025",

@@ -29,7 +29,7 @@ export default function PhotoViewer({ photos }) {
         {photos[currentIndex].endsWith(".mp4") ? 
           <video
             src={photos[currentIndex]}
-            className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg object-cover"
+            className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg rotate-270 object-cover"
             autoPlay
             muted
             loop
