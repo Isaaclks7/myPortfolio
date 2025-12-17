@@ -26,14 +26,25 @@ export default function PhotoViewer({ photos }) {
         >
           <ChevronLeft size={24} />
         </button>
-        <Image
-          className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg object-cover"
-          src={photos[currentIndex]}
-          alt={`Photo ${currentIndex + 1}`}
-          width={100}
-          height={100}
-          
-        />
+        {photos[currentIndex].endsWith(".mp4") ? 
+          <video
+            src={photos[currentIndex]}
+            className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          :
+          <Image
+            className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg object-cover"
+            src={photos[currentIndex]}
+            alt={`Photo ${currentIndex + 1}`}
+            width={100}
+            height={100}
+            
+          />
+        }
         <button
           onClick={nextPhoto}
           className={`top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
