@@ -102,9 +102,9 @@ export default function Home() {
             captions={item.photoCaption}
             startDate={item.startDate}
             endDate={item.endDate}
-			projectImg={item.projectImg}
-			zoom={item.zoom}
-			position={item.position}
+            projectImg={item.projectImg}
+            zoom={item.zoom}
+            position={item.position}
           />
       ))}
       <ContactBar/>
