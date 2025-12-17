@@ -4,9 +4,8 @@ import { useState } from "react"
 import { ChevronDown, ChevronRight } from "@deemlol/next-icons";
 import useThemeStore from "@/stores" 
 
-
 export default function WorkComponent({
-    jobTitle, company, description, startDate, endDate, companyWeb, companyImg, zoom, position
+    jobTitle, company, description, startDate, endDate, companyImg, zoom, position
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const { darkMode, toggleDarkMode } = useThemeStore()
@@ -33,20 +32,20 @@ export default function WorkComponent({
                 <div className={`flex flex-col ${darkMode ? "text-white" : "text-black"} px-3 w-full`}>
                     <div className="flex justify-between text-sm">
                         <div className="flex font-bold items-center gap-1 text-left">
-							<span className="whitespace-nowrap">
+                            <span className="whitespace-nowrap">
                                 {company} 
-							</span>
-							<span>
-								{isOpen ?
-									<ChevronDown size={16}/>
-									:
-									<ChevronRight size={16}/>
-								}
-							</span>
+                            </span>
+                            <span>
+                                {isOpen ?
+                                    <ChevronDown size={16}/>
+                                    :
+                                    <ChevronRight size={16}/>
+                                }
+                            </span>
                         </div>
                         <div className="text-sm text-right whitespace-nowrap">
-							{startDate} - {endDate}
-						</div>
+                            {startDate} - {endDate}
+                        </div>
                     </div>
                     <div className="text-sm text-left">
                         {jobTitle}
@@ -61,6 +60,5 @@ export default function WorkComponent({
                 </div>
             </div>
         </button>
-        
-    )
+    );
 }

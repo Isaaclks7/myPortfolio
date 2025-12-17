@@ -8,8 +8,9 @@ import AboutMe from "@/components/aboutMe"
 import Education from "@/components/education"
 import Skills from "@/components/skills"
 import Project from "@/components/project"
+import ContactBar from "@/components/contactBar"
 import VantaBackground from "./vantaBackground";
-import { Moon, Sun, Github, Linkedin, Mail  } from "@deemlol/next-icons";
+import { Moon, Sun  } from "@deemlol/next-icons";
 import useThemeStore from "@/stores" 
 
 export default function Home() {
@@ -58,16 +59,15 @@ export default function Home() {
       </h1>
       {experience.map((item) => (
         <WorkComponent
-          key={item.id}
-          jobTitle={item.jobTitle}
-          company={item.company}
-          description={item.description}
-          startDate={item.startDate}
-          endDate={item.endDate}
-          companyWeb={item.companyWeb}
-          companyImg={item.companyImg}
-          zoom={item.zoom}
-          position={item.position}/>
+        key={item.id}
+        jobTitle={item.jobTitle}
+        company={item.company}
+        description={item.description}
+        startDate={item.startDate}
+        endDate={item.endDate}
+        companyImg={item.companyImg}
+        zoom={item.zoom}
+        position={item.position}/>
       ))}
       <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         EDUCATION
@@ -107,17 +107,7 @@ export default function Home() {
 			position={item.position}
           />
       ))}
-      <h1 className="fixed flex text-white left-0 right-0 border-t shadow-xl justify-center gap-8 bottom-0 py-2 bg-black">
-        <button className="cursor-pointer" onClick={() => window.open("https://github.com/isaaclks7", "_blank")}>
-          <Github/>
-        </button>
-        <button className="cursor-pointer" onClick={() => window.open("www.linkedin.com/in/isaaclks7", "_blank")}>
-          <Linkedin/>
-        </button>
-        <button className="cursor-pointer">
-          <Mail/>
-        </button>
-      </h1>
+      <ContactBar/>
     </div>
   );
 }

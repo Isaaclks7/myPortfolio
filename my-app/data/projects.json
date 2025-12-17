@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Bomb Go Boom",
-        "description": "Bomb defusal minigame",
+        "description": "Bomb defusal minigame on Basys3 FPGA",
         "technologies": "Verilog, Logic Gates, Digital Design",
         "photos": [
             "/project_images/start_screen.jpg",
@@ -33,9 +33,19 @@
     {
         "id": 2,
         "name": "NurseSched",
-        "description": "CLI Assistant",
+        "description": "CLI Assistant for Nurses",
         "technologies": "Java, OOP, Abstraction, Inheritance",
         "photos": ["/company_images/certis.jpg", "/company_images/oneberry.jpg", "/company_images/nus.webp"],
+        "photoCaption": [
+            "Start screen",
+            "Wire cutting minigame",
+            "Minigame inspired by 'Flow Free' game",
+            "Maze minigame",
+            "Victory screen",
+            "'SUCCESS' scrolling message",
+            "'LOSE' scrolling message",
+            "Idle screen design"
+        ],
         "startDate": "Mar 2025",
         "endDate": "May 2025",
         "projectImg": "/project_images/nursesched.avif",
