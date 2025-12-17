@@ -1,9 +1,9 @@
 [
     {
         "id": 1,
-        "name": "Bomb Go Off",
+        "name": "Bomb Go Boom",
         "description": "Bomb defusal minigame",
-        "technologies": "Built with Verilog",
+        "technologies": "Verilog, Logic Gates, Digital Design",
         "photos": [
             "/project_images/start_screen.jpg",
             "/project_images/wire_cut.jpg",
@@ -13,6 +13,16 @@
             "/project_images/success.mp4",
             "/project_images/lose.mp4",
             "/project_images/warning.jpg"
+        ],
+        "photoCaption": [
+            "Start screen",
+            "Wire cutting minigame",
+            "Minigame inspired by 'Flow Free' game",
+            "Maze minigame",
+            "Victory screen",
+            "'SUCCESS' scrolling message",
+            "'LOSE' scrolling message",
+            "Idle screen design"
         ],
         "startDate": "Mar 2025",
         "endDate": "May 2025",

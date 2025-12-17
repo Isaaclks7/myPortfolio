@@ -99,6 +99,7 @@ export default function Home() {
             description={item.description}
             technologies={item.technologies}
             photos={item.photos}
+            captions={item.photoCaption}
             startDate={item.startDate}
             endDate={item.endDate}
 			projectImg={item.projectImg}

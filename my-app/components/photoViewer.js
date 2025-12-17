@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "@deemlol/next-icons";
 import Image from "next/image"
 import useThemeStore from "@/stores";
 
-export default function PhotoViewer({ photos }) {
+export default function PhotoViewer({ photos, captions }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { darkMode, toggleDarkMode } = useThemeStore()
 
@@ -52,8 +52,9 @@ export default function PhotoViewer({ photos }) {
           <ChevronRight size={24} />
         </button>
       </div>
-      <div className="absolute left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-        {currentIndex + 1} / {photos.length}
+      <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 text-white py-1 text-sm">
+        <p className={`text-center ${darkMode ? "text-white" : "text-black"}`}>{captions[currentIndex]}</p>
+        <p className={`text-center ${darkMode ? "bg-white/20" : "bg-black/50"} rounded-full w-12`}>{currentIndex + 1} / {photos.length}</p>
       </div>
     </div>
   );
