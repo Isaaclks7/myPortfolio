@@ -20,8 +20,8 @@ export default function WorkComponent({
                     <Image
                         src={companyImg}
                         alt="Company Logo"
-                        width={100}
-                        height={100}
+                        width={300}
+                        height={300}
                         className="object-cover"
                         style={{
                             transform: `scale(${zoom})`,

@@ -10,7 +10,6 @@ import Skills from "@/components/skills"
 import Project from "@/components/project"
 import ContactBar from "@/components/contactBar"
 import VantaBackground from "./vantaBackground";
-import { Moon, Sun  } from "@deemlol/next-icons";
 import useThemeStore from "@/stores" 
 
 export default function Home() {
@@ -21,16 +20,16 @@ export default function Home() {
       <VantaBackground isDarkMode={darkMode}/>
       <h1 className={`flex flex-col py-6 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         <div className="flex flex-col items-center">
-          <span className="flex relative w-32 h-32 overflow-hidden flex-row justify-center">
+          <span className={`relative border ${darkMode ? "border-white" : "border-black"} p-2 rounded-[50%] inline-block overflow-hidden bg-white"`} style={{width: '90px', height: '90px'}}>
             <Image
               src="/profile_pic.jpg"
               alt="Profile picture"
-              width={120}
-              height={120}
-              className={`rounded-full object-cover mb-2 border-2 ${darkMode ? "border-white" : "border-black"}`}
+              width={300}
+              height={300}
+              className="object-cover"
               style={{
-                objectPosition: "55%",
-                transform: `scale (5)`
+                transformOrigin: "39px 16px",
+                transform: "scale(2.3)"
               }}
             />
           </span>
@@ -38,19 +37,10 @@ export default function Home() {
             <span>
               Lim Kai Sheng Isaac
             </span>
-            {darkMode ?
-              <button className="cursor-pointer" onClick={toggleDarkMode}>
-                <Moon/>
-              </button>
-              :
-              <button className="cursor-pointer" onClick={toggleDarkMode}>
-                <Sun/>
-              </button>
-            }
           </p>
         </div>
       </h1>
-      <h1 className={`flex justify-center py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
+      <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
         ABOUT
       </h1>
       <AboutMe/>
