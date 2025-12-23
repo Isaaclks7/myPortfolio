@@ -32,6 +32,12 @@ export default function ContactBar(){
                 <button
                     className={`flex gap-2 ${darkMode ? "text-white" : "text-black"} py-1 px-3 cursor-pointer rounded ${darkMode ? "hover:bg-white/10" : "hover:bg-black/20"}`}
                     onClick={() => {
+                        if (typeof gtag === "function") {
+                            gtag("event", "resume_download", {
+                              event_category: "engagement",
+                              event_label: "Resume Button",
+                            });
+                        }
                         const link = document.createElement("a")
                         link.href = "resume.pdf"
                         link.download = "Isaac's Resume"
