@@ -6,7 +6,7 @@ import useThemeStore from "@/stores"
 import PhotoViewer from "./photoViewer";
 
 export default function Project({
-    name, description, technologies, photos, captions, startDate, endDate, projectImg, zoom, position
+    name, description, technologies, photos, captions, startDate, endDate, projectImg, zoom, position, vidZoom, vidPosition, width
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const { darkMode, toggleDarkMode } = useThemeStore()
@@ -28,7 +28,7 @@ export default function Project({
                             style={{
                                 transform: `scale(${zoom})`,
                                 transformOrigin: position
-                        }}
+                            }}
                         />
                     </span>
                     <div className={`flex flex-col ${darkMode ? "text-white" : "text-black"} px-3 w-full`}>
@@ -63,7 +63,7 @@ export default function Project({
                 </div>
             </button>
             {isOpen ?  
-                <PhotoViewer photos={photos} captions={captions}/>
+                <PhotoViewer photos={photos} captions={captions} zoom={vidZoom} position={vidPosition} width={width}/>
                 :
                 ""
             }

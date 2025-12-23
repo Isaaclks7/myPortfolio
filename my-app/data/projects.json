@@ -5,14 +5,14 @@
         "description": "Bomb defusal minigame on Basys3 FPGA",
         "technologies": "Verilog, Logic Gates, Digital Design",
         "photos": [
-            "/project_images/start_screen.jpg",
-            "/project_images/wire_cut.jpg",
-            "/project_images/flow_free.jpg",
-            "/project_images/maze.jpg",
-            "/project_images/victory.jpg",
-            "/project_images/success.mp4",
-            "/project_images/lose.mp4",
-            "/project_images/warning.jpg"
+            "/bomb_go_off/start_screen.jpg",
+            "/bomb_go_off/wire_cut.jpg",
+            "/bomb_go_off/flow_free.jpg",
+            "/bomb_go_off/maze.jpg",
+            "/bomb_go_off/victory.jpg",
+            "/bomb_go_off/success.mp4",
+            "/bomb_go_off/lose.mp4",
+            "/bomb_go_off/warning.jpg"
         ],
         "photoCaption": [
             "Start screen",
@@ -24,32 +24,75 @@
             "'LOSE' scrolling message",
             "Idle screen design"
         ],
+        "vidZoom": [
+            "1.5",
+            "1.5",
+            "1.45",
+            "1.5",
+            "1.6",
+            "3.5",
+            "6.3",
+            "1.4"
+        ],
+        "vidPosition": [
+            "80px 140px",
+            "80px 170px",
+            "80px 200px",
+            "90px 140px",
+            "80px 170px",
+            "38px 40px",
+            "63px 40px",
+            "80px 180px"
+        ],
         "startDate": "Mar 2025",
         "endDate": "May 2025",
-        "projectImg": "/project_images/bomb.jpg",
+        "projectImg": "/bomb_go_off/bomb.jpg",
         "zoom": "1.7",
-        "position": "13px 12px"
+        "position": "13px 12px",
+        "width": "w-40"
     },
     {
         "id": 2,
         "name": "NurseSched",
         "description": "CLI Assistant for Nurses",
         "technologies": "Java, OOP, Abstraction, Inheritance",
-        "photos": ["/company_images/certis.jpg", "/company_images/oneberry.jpg", "/company_images/nus.webp"],
+        "photos": [
+            "/nursesched/add.mp4",
+            "/nursesched/mark.mp4",
+            "/nursesched/delete.mp4",
+            "/nursesched/edit_title.mp4",
+            "/nursesched/edit_time.mp4",
+            "/nursesched/find.mp4"
+        ],
         "photoCaption": [
-            "Start screen",
-            "Wire cutting minigame",
-            "Minigame inspired by 'Flow Free' game",
-            "Maze minigame",
-            "Victory screen",
-            "'SUCCESS' scrolling message",
-            "'LOSE' scrolling message",
-            "Idle screen design"
+            "Add a task",
+            "Mark a task",
+            "Delete a task",
+            "Edit task's name",
+            "Edit task's due date and time",
+            "Find tasks with keyword(s)"
+        ],
+        "vidZoom": [
+            "1.5",
+            "1.5",
+            "1.5",
+            "1.5",
+            "1.5",
+            "1.5"
+        ],
+        "vidPosition": [
+            "40px 10px",
+            "40px 10px",
+            "40px 10px",
+            "40px 10px",
+            "40px 10px",
+            "40px 10px"
         ],
         "startDate": "Mar 2025",
         "endDate": "May 2025",
-        "projectImg": "/project_images/nursesched.avif",
+        "projectImg": "/nursesched/nursesched.jpeg",
         "zoom": "1.5",
-        "position": "11px 11px"
+        "position": "11px 11px",
+        "width": "w-70"
     }
 ]

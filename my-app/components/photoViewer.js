@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "@deemlol/next-icons";
 import Image from "next/image"
 import useThemeStore from "@/stores";
 
-export default function PhotoViewer({ photos, captions }) {
+export default function PhotoViewer({ photos, captions, zoom, position, width }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { darkMode, toggleDarkMode } = useThemeStore()
 
@@ -18,36 +18,45 @@ export default function PhotoViewer({ photos, captions }) {
   if (!photos || photos.length === 0) return null;
 
   return (
-    <div className="mb-10">
+    <div className="mb-15">
       <div className="flex justify-center items-center gap-6">
         <button
           onClick={prevPhoto}
-          className={`top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
+          className={`cursor-pointer top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
         >
           <ChevronLeft size={24} />
         </button>
-        {photos[currentIndex].endsWith(".mp4") ? 
-          <video
-            src={photos[currentIndex]}
-            className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg rotate-270 object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
+		<div className={`${width} h-40 sm:w-60 sm:h-60 overflow-hidden rounded-lg`}>
+        {photos[currentIndex].endsWith(".mp4") ?  
+		  <video
+			src={photos[currentIndex]}
+			className="object-cover"
+			autoPlay
+			muted
+			loop
+			playsInline
+			style={{
+				transform: `scale(${zoom[currentIndex]})`,
+				transformOrigin: position[currentIndex]
+			}}
+		  />
           :
           <Image
-            className="w-40 h-40 sm:w-60 sm:h-60 rounded-lg object-cover"
+            className="object-cover"
             src={photos[currentIndex]}
             alt={`Photo ${currentIndex + 1}`}
-            width={100}
-            height={100}
-            
+            width={500}
+            height={500}
+            style={{
+				transform: `scale(${zoom[currentIndex]})`,
+				transformOrigin: position[currentIndex]
+			}}
           />
         }
+		</div>
         <button
           onClick={nextPhoto}
-          className={`top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
+          className={`cursor-pointer top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
         >
           <ChevronRight size={24} />
         </button>

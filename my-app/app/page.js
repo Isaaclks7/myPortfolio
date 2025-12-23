@@ -41,7 +41,7 @@ export default function Home() {
         </div>
       </h1>
       <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
-        ABOUT
+        ABOUT <br/> (This website is still a work in progress, expect some bugs)
       </h1>
       <AboutMe/>
       <h1 className={`flex justify-start py-4 font-bold text-xl ${darkMode ? "text-white" : "text-black"}`}>
@@ -95,9 +95,13 @@ export default function Home() {
             projectImg={item.projectImg}
             zoom={item.zoom}
             position={item.position}
+            vidZoom={item.vidZoom}
+            vidPosition={item.vidPosition}
+            width={item.width}
           />
       ))}
       <ContactBar/>
+      <div className="flex"/>
     </div>
   );
 }
