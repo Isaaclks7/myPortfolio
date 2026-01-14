@@ -30,7 +30,7 @@ export default function ContactBar(){
         <div className={`fixed flex flex-row text-white left-0 right-0 border-t shadow-xl bottom-0 py-2 px-6 ${darkMode ? "bg-black border-white/20" : "bg-white border-black/40"} justify-between`}>
             <p className="flex flex-1 justify-start">
                 <button
-                    className={`flex gap-1 ${darkMode ? "text-white" : "text-black"} py-1 px-3 cursor-pointer rounded ${darkMode ? "hover:bg-white/10" : "hover:bg-black/20"}`}
+                    className={`flex gap-1 text-sm ${darkMode ? "text-white" : "text-black"} py-1 px-1 cursor-pointer rounded ${darkMode ? "hover:bg-white/10" : "hover:bg-black/20"}`}
                     onClick={() => {
                         if (typeof gtag === "function") {
                             gtag("event", "resume_download", {
@@ -45,7 +45,7 @@ export default function ContactBar(){
                     }}    
                 >
                     Resume
-                    <Download size={24} color={darkMode ? "#FFFFFF" : "#000000"}/>
+                    <Download size={18} color={darkMode ? "#FFFFFF" : "#000000"}/>
                 </button>
             </p>
             <div className="gap-4 sm:gap-8 flex flex-1 justify-center">
