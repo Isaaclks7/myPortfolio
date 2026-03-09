@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+:root {
+  --bg:        #0a0a0a;
+  --surface:   #111111;
+  --border:    #222222;
+  --text:      #e8e8e8;
+  --muted:     #666666;
+  --accent:    #e8e8e8;
+  --toggle-bg: #1a1a1a;
+}
+
+html.light-mode {
+  --bg:        #f5f4f0;
+  --surface:   #eeede9;
+  --border:    #d4d3cf;
+  --text:      #111111;
+  --muted:     #888888;
+  --accent:    #111111;
+  --toggle-bg: #e0dfd9;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.4s ease, color 0.4s ease;
+}

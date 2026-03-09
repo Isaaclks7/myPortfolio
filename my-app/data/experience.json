@@ -8,8 +8,8 @@
         "endDate": "Dec 2025",
         "companyWeb": "https://www.certisgroup.com/",
         "companyImg": "/company_images/certis.jpg",
-        "zoom": "1.25",
-        "position": "12px 25px"
+        "zoom": "0.8",
+        "position": "12px 20px"
     },
     {
         "id": 2,
@@ -20,7 +20,7 @@
         "endDate": "Aug 2024",
         "companyWeb": "https://oneberry.com/",
         "companyImg": "/company_images/oneberry.jpg",
-        "zoom": "1.4",
+        "zoom": "0.8",
         "position": "12px 10px"
     }
 ]

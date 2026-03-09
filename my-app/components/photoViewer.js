@@ -1,70 +1,179 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "@deemlol/next-icons";
+"use client"
+import { useState } from "react"
 import Image from "next/image"
-import useThemeStore from "@/stores";
+import useThemeStore from "@/stores"
 
 export default function PhotoViewer({ photos, captions, zoom, position, width }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const { darkMode, toggleDarkMode } = useThemeStore()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const { darkMode } = useThemeStore()
 
-  const prevPhoto = () => {
-    setCurrentIndex((prev) => (prev === 0 ? photos.length - 1 : prev - 1));
-  };
+  const prev = () => setCurrentIndex(i => (i === 0 ? photos.length - 1 : i - 1))
+  const next = () => setCurrentIndex(i => (i === photos.length - 1 ? 0 : i + 1))
 
-  const nextPhoto = () => {
-    setCurrentIndex((prev) => (prev === photos.length - 1 ? 0 : prev + 1));
-  };
+  if (!photos || photos.length === 0) return null
 
-  if (!photos || photos.length === 0) return null;
+  const isVideo = photos[currentIndex].endsWith(".mp4")
+  const mediaStyle = {
+    transform: `scale(${zoom[currentIndex]})`,
+    transformOrigin: position[currentIndex],
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  }
 
   return (
-    <div className="mb-15">
-      <div className="flex justify-center items-center gap-6">
-        <button
-          onClick={prevPhoto}
-          className={`cursor-pointer top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
-        >
-          <ChevronLeft size={24} />
-        </button>
-		<div className={`${width} h-40 sm:w-60 sm:h-60 overflow-hidden rounded-lg`}>
-        {photos[currentIndex].endsWith(".mp4") ?  
-		  <video
-			src={photos[currentIndex]}
-			className="object-cover"
-			autoPlay
-			muted
-			loop
-			playsInline
-			style={{
-				transform: `scale(${zoom[currentIndex]})`,
-				transformOrigin: position[currentIndex]
-			}}
-		  />
-          :
-          <Image
-            className="object-cover"
-            src={photos[currentIndex]}
-            alt={`Photo ${currentIndex + 1}`}
-            width={500}
-            height={500}
-            style={{
-				transform: `scale(${zoom[currentIndex]})`,
-				transformOrigin: position[currentIndex]
-			}}
-          />
+    <>
+      <style>{`
+        .pv-wrap {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.5rem 0 1.25rem;
         }
-		</div>
-        <button
-          onClick={nextPhoto}
-          className={`cursor-pointer top-1/2 left-2 h-full ${darkMode ? "text-white hover:bg-white/20" : "text-black hover:bg-black/20"} p-2 rounded-full  transition`}
-        >
-          <ChevronRight size={24} />
-        </button>
+
+        .pv-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          width: 100%;
+        }
+
+        .pv-media {
+          flex: 1;
+          aspect-ratio: 1 / 1;
+          max-width: 260px;
+          overflow: hidden;
+          border-radius: 8px;
+          border: 1px solid var(--border);
+          background: var(--surface);
+          margin: 0 auto;
+        }
+
+        .pv-btn {
+          flex-shrink: 0;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border);
+          border-radius: 50%;
+          background: none;
+          cursor: pointer;
+          color: var(--muted);
+          transition: border-color 0.2s, color 0.2s;
+        }
+        .pv-btn:hover { border-color: var(--text); color: var(--text); }
+        .pv-btn svg { width: 14px; height: 14px; }
+
+        /* arrow shapes via CSS — no icon dep */
+        .pv-arrow {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          border-right: 1.5px solid currentColor;
+          border-bottom: 1.5px solid currentColor;
+        }
+        .pv-arrow-left  { transform: rotate(135deg) translate(-1px, -1px); }
+        .pv-arrow-right { transform: rotate(-45deg) translate(-1px, -1px); }
+
+        .pv-caption {
+          font-family: 'IBM Plex Sans', sans-serif;
+          font-size: 0.75rem;
+          font-weight: 300;
+          color: var(--muted);
+          text-align: center;
+          min-height: 1.2em;
+          letter-spacing: 0.02em;
+          max-width: 260px;
+        }
+
+        .pv-counter {
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.58rem;
+          letter-spacing: 0.18em;
+          color: var(--muted);
+          text-align: center;
+        }
+
+        /* dot indicators */
+        .pv-dots {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+        }
+        .pv-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--border);
+          cursor: pointer;
+          transition: background 0.2s, transform 0.2s;
+          border: none;
+          padding: 0;
+        }
+        .pv-dot.active {
+          background: var(--text);
+          transform: scale(1.3);
+        }
+      `}</style>
+
+      <div className="pv-wrap">
+        {/* media + arrows */}
+        <div className="pv-row">
+          <button className="pv-btn" onClick={prev} aria-label="Previous">
+            <span className="pv-arrow pv-arrow-left" />
+          </button>
+
+          <div className="pv-media">
+            {isVideo ? (
+              <video
+                src={photos[currentIndex]}
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={mediaStyle}
+              />
+            ) : (
+              <Image
+                src={photos[currentIndex]}
+                alt={captions?.[currentIndex] || `Photo ${currentIndex + 1}`}
+                width={500}
+                height={500}
+                style={mediaStyle}
+              />
+            )}
+          </div>
+
+          <button className="pv-btn" onClick={next} aria-label="Next">
+            <span className="pv-arrow pv-arrow-right" />
+          </button>
+        </div>
+
+        {/* caption */}
+        {captions?.[currentIndex] && (
+          <p className="pv-caption">{captions[currentIndex]}</p>
+        )}
+
+        {/* dots + counter */}
+        {photos.length > 1 && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
+            <div className="pv-dots">
+              {photos.map((_, i) => (
+                <button
+                  key={i}
+                  className={`pv-dot${i === currentIndex ? " active" : ""}`}
+                  onClick={() => setCurrentIndex(i)}
+                  aria-label={`Go to photo ${i + 1}`}
+                />
+              ))}
+            </div>
+            <span className="pv-counter">{currentIndex + 1} / {photos.length}</span>
+          </div>
+        )}
       </div>
-      <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 text-white py-1 text-sm">
-        <p className={`text-center ${darkMode ? "text-white" : "text-black"}`}>{captions[currentIndex]}</p>
-        <p className={`text-center ${darkMode ? "bg-white/20" : "bg-black/50"} rounded-full w-12`}>{currentIndex + 1} / {photos.length}</p>
-      </div>
-    </div>
-  );
+    </>
+  )
 }
