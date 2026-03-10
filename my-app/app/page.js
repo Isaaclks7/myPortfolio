@@ -267,7 +267,7 @@ export default function Home() {
           alt=""
           fill
           priority
-          style={{ objectFit: "cover", objectPosition: "center top" }}
+          style={{ objectFit: "cover", objectPosition: "55% center" }}
         />
       </div>
 
