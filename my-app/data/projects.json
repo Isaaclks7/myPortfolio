@@ -1,9 +1,23 @@
 [
     {
         "id": 1,
+        "name": "Fall Detector",
+        "description": "STM32L4S5-based fall detection system that detects fall impacts and confirms falls through post-impact inactivity monitoring.",
+        "technologies": "C, STM32L4S5, Embedded Systems, I2C Sensor Interface, Real-Time Motion Detection",
+        "githubLink": "https://github.com/Isaaclks7/FallDetector",
+        "photos": [],
+        "photoCaption": [],
+        "vidZoom": [],
+        "vidPosition": [],
+        "startDate": "Feb 2026",
+        "endDate": "Mar 2026"
+    },
+    {
+        "id": 2,
         "name": "Bomb Go Boom",
-        "description": "Bomb defusal minigame on Basys3 FPGA",
+        "description": "Bomb defusal game consisting of 3 mini-games on the Basys3 FPGA",
         "technologies": "Verilog, Logic Gates, Digital Design",
+        "githubLink": "https://github.com/felfelyuen/ee2026_finalproject",
         "photos": [
             "/bomb_go_off/start_screen.jpg",
             "/bomb_go_off/wire_cut.jpg",
@@ -30,7 +44,7 @@
             "1.45",
             "1.5",
             "1.6",
-            "3.5",
+            "2.5",
             "6.3",
             "1.4"
         ],
@@ -40,22 +54,19 @@
             "80px 200px",
             "90px 140px",
             "80px 170px",
-            "38px 40px",
+            "0px 150px",
             "63px 40px",
             "80px 180px"
         ],
         "startDate": "Mar 2025",
-        "endDate": "May 2025",
-        "projectImg": "/bomb_go_off/bomb.jpg",
-        "zoom": "1.7",
-        "position": "13px 12px",
-        "width": "w-40"
+        "endDate": "May 2025"
     },
     {
-        "id": 2,
+        "id": 3,
         "name": "NurseSched",
-        "description": "CLI Assistant for Nurses",
+        "description": "CLI Assistant for Nurses to manage patient appointments, tasks, medicine stock and more.",
         "technologies": "Java, OOP, Abstraction, Inheritance",
+        "githubLink": "https://github.com/Isaaclks7/tp",
         "photos": [
             "/nursesched/add.mp4",
             "/nursesched/mark.mp4",
@@ -89,10 +100,6 @@
             "40px 10px"
         ],
         "startDate": "Mar 2025",
-        "endDate": "May 2025",
-        "projectImg": "/nursesched/nursesched.jpeg",
-        "zoom": "1.5",
-        "position": "11px 11px",
-        "width": "w-70"
+        "endDate": "May 2025"
     }
 ]

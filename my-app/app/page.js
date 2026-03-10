@@ -17,10 +17,14 @@ export default function Home() {
   const { darkMode, toggleDarkMode } = useThemeStore()
   const [mounted, setMounted] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
     setMounted(true)
-    const handleScroll = () => setScrolled(window.scrollY > 40)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40)
+      setScrollY(window.scrollY)
+    }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -29,9 +33,11 @@ export default function Home() {
 
   const dm = darkMode
 
+  // Fade out the hero image as user scrolls — fully gone by 400px
+  const heroImgOpacity = Math.max(0, 1 - scrollY / 400)
+
   return (
     <>
-      {/* ── Google Fonts ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
 
@@ -120,6 +126,36 @@ export default function Home() {
           padding: 8rem 0 5rem;
           position: relative;
         }
+
+        /* ── Hero background image ── */
+        .hero-bg {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          z-index: -1;
+          pointer-events: none;
+        }
+        .hero-bg img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+        }
+        /* Dark gradient overlay so text stays readable */
+        .hero-bg::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.35) 0%,
+            rgba(0,0,0,0.55) 60%,
+            var(--bg) 100%
+          );
+        }
+
         .hero-eyebrow {
           font-family: 'IBM Plex Mono', monospace;
           font-size: 0.65rem;
@@ -133,32 +169,17 @@ export default function Home() {
           font-size: clamp(4rem, 12vw, 9rem);
           line-height: 0.92;
           letter-spacing: 0.03em;
-          color: var(--text);
+          color: #ffffff;
         }
         .hero-name .line-muted { color: var(--muted); }
         .hero-sub {
           margin-top: 2rem;
           font-size: clamp(0.85rem, 1.5vw, 1rem);
-          color: var(--muted);
+          color: var(--text);
           max-width: 420px;
           line-height: 1.7;
           font-weight: 300;
         }
-
-        /* ── Avatar chip ── */
-        .avatar-chip {
-          position: absolute;
-          top: 8rem;
-          right: 0;
-          width: clamp(80px, 12vw, 110px);
-          height: clamp(80px, 12vw, 110px);
-          border-radius: 50%;
-          overflow: hidden;
-          border: 1px solid var(--border);
-          background: var(--surface);
-          transition: border-color 0.25s;
-        }
-        .avatar-chip:hover { border-color: var(--text); }
 
         /* ── Section ── */
         .section {
@@ -223,7 +244,6 @@ export default function Home() {
         @media (max-width: 640px) {
           .nav-links { display: none; }
           .hero { padding-top: 6rem; }
-          .avatar-chip { top: 6.5rem; }
         }
 
         /* ── Fade-in animation ── */
@@ -240,153 +260,154 @@ export default function Home() {
 
       <VantaBackground isDarkMode={dm} />
 
-        {/* ── Navbar ── */}
-        <nav className={`nav${scrolled ? " scrolled" : ""}`}>
-          <a href="#" className="nav-wordmark">Isaac LKS</a>
-          <ul className="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-          </ul>
-          <button className="toggle-btn" onClick={toggleDarkMode} aria-label="Toggle theme">
-            <span className="toggle-icon">{dm ? "☀" : "◑"}</span>
-            {dm ? "Light" : "Dark"}
-          </button>
-        </nav>
+      {/* ── Hero background image (fixed, fades on scroll) ── */}
+      <div className="hero-bg" style={{ opacity: heroImgOpacity }}>
+        <Image
+          src="/profile_pic.jpg"
+          alt=""
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "center top" }}
+        />
+      </div>
 
-        {/* ── Main ── */}
-        <div className="main-wrap">
+      {/* ── Navbar ── */}
+      <nav className={`nav${scrolled ? " scrolled" : ""}`}>
+        <a href="#" className="nav-wordmark">Isaac LKS</a>
+        <ul className="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+        </ul>
+        <button className="toggle-btn" onClick={toggleDarkMode} aria-label="Toggle theme">
+          <span className="toggle-icon">{dm ? "☀" : "◑"}</span>
+          {dm ? "Light" : "Dark"}
+        </button>
+      </nav>
 
-          {/* ── Hero ── */}
-          <section className="hero">
-            <span className="avatar-chip fade-up fade-up-d4">
-              <Image
-                src="/profile_pic.jpg"
-                alt="Isaac LKS"
-                width={300}
-                height={300}
-                className="object-cover"
-                style={{ transformOrigin: "39px 16px", transform: "scale(2.3)", width: "100%", height: "100%" }}
-              />
+      {/* ── Main ── */}
+      <div className="main-wrap">
+
+        {/* ── Hero ── */}
+        <section className="hero">
+          <p className="hero-eyebrow fade-up">— Portfolio</p>
+
+          <h1 className="hero-name fade-up fade-up-d1">
+            Lim Kai<br />
+            <span className="line-muted">Sheng</span><br />
+            Isaac
+          </h1>
+
+          <p className="hero-sub fade-up fade-up-d2">
+            Developer · Designer · Builder.<br />
+            Crafting thoughtful digital experiences one commit at a time.
+          </p>
+
+          <div style={{ marginTop: "2rem" }} className="fade-up fade-up-d3">
+            <span className="wip-badge">
+              <span className="wip-dot" />
+              Site under construction — expect some bugs
             </span>
+          </div>
+        </section>
 
-            <p className="hero-eyebrow fade-up">— Portfolio</p>
+        {/* ── About ── */}
+        <section id="about" className="section">
+          <div className="section-label">
+            <span className="section-label-num">01</span>
+            <span className="section-label-title">About</span>
+          </div>
+          <AboutMe />
+        </section>
 
-            <h1 className="hero-name fade-up fade-up-d1">
-              Lim Kai<br />
-              <span className="line-muted">Sheng</span><br />
-              Isaac
-            </h1>
+        {/* ── Work ── */}
+        <section id="work" className="section">
+          <div className="section-label">
+            <span className="section-label-num">02</span>
+            <span className="section-label-title">Work Experiences</span>
+          </div>
+          {experience.map((item) => (
+            <WorkComponent
+              key={item.id}
+              jobTitle={item.jobTitle}
+              company={item.company}
+              description={item.description}
+              startDate={item.startDate}
+              endDate={item.endDate}
+              companyImg={item.companyImg}
+              zoom={item.zoom}
+              position={item.position}
+            />
+          ))}
+        </section>
 
-            <p className="hero-sub fade-up fade-up-d2">
-              Developer · Designer · Builder.<br />
-              Crafting thoughtful digital experiences one commit at a time.
-            </p>
+        {/* ── Education ── */}
+        <section id="education" className="section">
+          <div className="section-label">
+            <span className="section-label-num">03</span>
+            <span className="section-label-title">Education</span>
+          </div>
+          {education.map((item) => (
+            <Education
+              key={item.id}
+              major={item.major}
+              school={item.school}
+              schoolShort={item.schoolShort}
+              grade={item.grade}
+              startDate={item.startDate}
+              endDate={item.endDate}
+              schoolWeb={item.schoolWeb}
+              schoolImg={item.schoolImg}
+              zoom={item.zoom}
+              position={item.position}
+            />
+          ))}
+        </section>
 
-            <div style={{ marginTop: "2rem" }} className="fade-up fade-up-d3">
-              <span className="wip-badge">
-                <span className="wip-dot" />
-                Site under construction — expect some bugs
-              </span>
-            </div>
-          </section>
+        {/* ── Skills ── */}
+        <section id="skills" className="section">
+          <div className="section-label">
+            <span className="section-label-num">04</span>
+            <span className="section-label-title">Skills</span>
+          </div>
+          <Skills />
+        </section>
 
-          {/* ── About ── */}
-          <section id="about" className="section">
-            <div className="section-label">
-              <span className="section-label-num">01</span>
-              <span className="section-label-title">About</span>
-            </div>
-            <AboutMe />
-          </section>
+        {/* ── Projects ── */}
+        <section id="projects" className="section">
+          <div className="section-label">
+            <span className="section-label-num">05</span>
+            <span className="section-label-title">Projects</span>
+          </div>
+          {projects.map((item) => (
+            <Project
+              key={item.id}
+              name={item.name}
+              description={item.description}
+              technologies={item.technologies}
+              githubLink={item.githubLink}
+              photos={item.photos}
+              captions={item.photoCaption}
+              startDate={item.startDate}
+              endDate={item.endDate}
+              projectImg={item.projectImg}
+              zoom={item.zoom}
+              position={item.position}
+              vidZoom={item.vidZoom}
+              vidPosition={item.vidPosition}
+              width={item.width}
+            />
+          ))}
+        </section>
 
-          {/* ── Work ── */}
-          <section id="work" className="section">
-            <div className="section-label">
-              <span className="section-label-num">02</span>
-              <span className="section-label-title">Work Experiences</span>
-            </div>
-            {experience.map((item) => (
-              <WorkComponent
-                key={item.id}
-                jobTitle={item.jobTitle}
-                company={item.company}
-                description={item.description}
-                startDate={item.startDate}
-                endDate={item.endDate}
-                companyImg={item.companyImg}
-                zoom={item.zoom}
-                position={item.position}
-              />
-            ))}
-          </section>
+        {/* ── Contact ── */}
+        <div className="thin-rule" />
+        <ContactBar />
 
-          {/* ── Education ── */}
-          <section id="education" className="section">
-            <div className="section-label">
-              <span className="section-label-num">03</span>
-              <span className="section-label-title">Education</span>
-            </div>
-            {education.map((item) => (
-              <Education
-                key={item.id}
-                major={item.major}
-                school={item.school}
-                schoolShort={item.schoolShort}
-                grade={item.grade}
-                startDate={item.startDate}
-                endDate={item.endDate}
-                schoolWeb={item.schoolWeb}
-                schoolImg={item.schoolImg}
-                zoom={item.zoom}
-                position={item.position}
-              />
-            ))}
-          </section>
-
-          {/* ── Skills ── */}
-          <section id="skills" className="section">
-            <div className="section-label">
-              <span className="section-label-num">04</span>
-              <span className="section-label-title">Skills</span>
-            </div>
-            <Skills />
-          </section>
-
-          {/* ── Projects ── */}
-          <section id="projects" className="section">
-            <div className="section-label">
-              <span className="section-label-num">05</span>
-              <span className="section-label-title">Projects</span>
-            </div>
-            {projects.map((item) => (
-              <Project
-                key={item.id}
-                name={item.name}
-                description={item.description}
-                technologies={item.technologies}
-                photos={item.photos}
-                captions={item.photoCaption}
-                startDate={item.startDate}
-                endDate={item.endDate}
-                projectImg={item.projectImg}
-                zoom={item.zoom}
-                position={item.position}
-                vidZoom={item.vidZoom}
-                vidPosition={item.vidPosition}
-                width={item.width}
-              />
-            ))}
-          </section>
-
-          {/* ── Contact ── */}
-          <div className="thin-rule" />
-          <ContactBar />
-
-          <div style={{ height: "5rem" }} />
-        </div>
+        <div style={{ height: "5rem" }} />
+      </div>
     </>
   )
 }

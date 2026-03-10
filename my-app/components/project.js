@@ -1,11 +1,10 @@
 "use client"
-import Image from "next/image"
 import { useState } from "react"
 import useThemeStore from "@/stores"
 import PhotoViewer from "./photoViewer"
 
 export default function Project({
-  name, description, technologies, photos, captions, startDate, endDate, projectImg, zoom, position, vidZoom, vidPosition, width
+  name, description, technologies, photos, captions, startDate, endDate, vidZoom, vidPosition, width, githubLink
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const { darkMode } = useThemeStore()
@@ -34,24 +33,11 @@ export default function Project({
 
         .proj-row {
           display: grid;
-          grid-template-columns: 36px 1fr auto;
+          grid-template-columns: 1fr auto;
           align-items: start;
           gap: 1rem;
           width: 100%;
         }
-
-        .proj-logo {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          border: 1px solid var(--border);
-          background: #fff;
-          overflow: hidden;
-          flex-shrink: 0;
-          margin-top: 2px;
-          transition: border-color 0.2s;
-        }
-        .proj-card:hover .proj-logo { border-color: var(--text); }
 
         .proj-meta { display: flex; flex-direction: column; gap: 4px; }
 
@@ -128,10 +114,10 @@ export default function Project({
         }
 
         .proj-expand-inner {
-          padding: 1rem 0 0.5rem calc(36px + 1rem);
+          padding: 1rem 0 0.5rem;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.6rem;
         }
 
         /* Tech tags */
@@ -139,6 +125,7 @@ export default function Project({
           display: flex;
           flex-wrap: wrap;
           gap: 0.4rem;
+          align-items: center;
         }
         .proj-tech-tag {
           font-family: 'IBM Plex Mono', monospace;
@@ -153,32 +140,32 @@ export default function Project({
           white-space: nowrap;
         }
 
-        /* Photo viewer wrapper */
-        .proj-photos {
-          padding-left: calc(36px + 1rem);
+        /* GitHub link */
+        .proj-github {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.58rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--text);
+          opacity: 0.6;
+          text-decoration: none;
+          transition: opacity 0.2s;
+          white-space: nowrap;
         }
-
-        @media (max-width: 640px) {
-          .proj-expand-inner { padding-left: 0; }
-          .proj-photos { padding-left: 0; }
+        .proj-github:hover { opacity: 1; }
+        .proj-github svg {
+          width: 11px;
+          height: 11px;
+          flex-shrink: 0;
         }
       `}</style>
 
       <div className="proj-card" onClick={() => setIsOpen(o => !o)}>
         {/* ── Header row ── */}
         <div className="proj-row">
-          {/* Logo */}
-          <div className="proj-logo">
-            <Image
-              src={projectImg}
-              alt={`${name} thumbnail`}
-              width={100}
-              height={100}
-              className="object-cover"
-              style={{ transform: `scale(${zoom})`, transformOrigin: position, width: "100%", height: "100%" }}
-            />
-          </div>
-
           {/* Name + description */}
           <div className="proj-meta">
             <div className="proj-name-row">
@@ -196,9 +183,10 @@ export default function Project({
           </div>
         </div>
 
-        {/* ── Expandable: tech tags + photos ── */}
+        {/* ── Expandable: tech tags + github + photos ── */}
         <div className={`proj-expand${isOpen ? " open" : ""}`}>
           <div className="proj-expand-inner" onClick={e => e.stopPropagation()}>
+
             {/* Tech tags */}
             {techList.length > 0 && (
               <div className="proj-tech-list">
@@ -208,17 +196,32 @@ export default function Project({
               </div>
             )}
 
+            {/* GitHub link — own row */}
+            {githubLink && (
+              <div>
+                <a
+                  href={githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="proj-github"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.52 11.52 0 0 1 12 6.844c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  View Code
+                </a>
+              </div>
+            )}
+
             {/* Photos */}
             {photos && photos.length > 0 && (
-              <div className="proj-photos">
-                <PhotoViewer
-                  photos={photos}
-                  captions={captions}
-                  zoom={vidZoom}
-                  position={vidPosition}
-                  width={width}
-                />
-              </div>
+              <PhotoViewer
+                photos={photos}
+                captions={captions}
+                zoom={vidZoom}
+                position={vidPosition}
+                width={width}
+              />
             )}
           </div>
         </div>
