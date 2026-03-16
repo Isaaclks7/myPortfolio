@@ -9,6 +9,7 @@ import Education from "@/components/education"
 import Skills from "@/components/skills"
 import Project from "@/components/project"
 import ContactBar from "@/components/contactBar"
+import Chatbot from "@/components/chatbot"
 import useThemeStore from "@/stores"
 import { useEffect, useState } from "react"
 
@@ -400,6 +401,7 @@ export default function Home() {
 
         <div style={{ height: "5rem" }} />
       </div>
+      <Chatbot/>
     </>
   )
 }
