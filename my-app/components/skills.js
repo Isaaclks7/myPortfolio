@@ -20,8 +20,8 @@ export default function Skills() {
           font-size: 0.62rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: var(--muted);
-          border: 1px solid var(--border);
+          color: ${darkMode ? 'white' : 'black'};
+          border: 1px solid ${darkMode ? 'white' : 'black'};
           border-radius: 100px;
           padding: 5px 13px;
           transition: color 0.2s, border-color 0.2s, background 0.2s;
@@ -33,7 +33,7 @@ export default function Skills() {
         .skill-pill:hover {
           color: var(--text);
           border-color: var(--text);
-          background: var(--surface);
+          background: ${darkMode ? 'rgb(46, 46, 46)' : '#afafafff'};
         }
       `}</style>
 

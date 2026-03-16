@@ -7,7 +7,7 @@ export default function WorkComponent({
   jobTitle, company, description, startDate, endDate, companyImg, zoom, position
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { darkMode } = useThemeStore()
+  const { darkMode, toggleDarkMode } = useThemeStore()
 
   return (
     <>
@@ -56,7 +56,7 @@ export default function WorkComponent({
           font-family: 'Syne', sans-serif;
           font-size: 1.15rem;
           letter-spacing: 0.06em;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           transition: color 0.2s;
           line-height: 1;
         }
@@ -65,7 +65,7 @@ export default function WorkComponent({
           font-family: 'IBM Plex Sans', sans-serif;
           font-size: 0.8rem;
           font-weight: 300;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           letter-spacing: 0.02em;
         }
 
@@ -74,7 +74,7 @@ export default function WorkComponent({
           font-size: 0.6rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           white-space: nowrap;
           padding-top: 3px;
           display: flex;
@@ -120,7 +120,7 @@ export default function WorkComponent({
           font-size: 0.85rem;
           font-weight: 300;
           line-height: 1.75;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           padding: 1rem 0 0.25rem calc(36px + 1rem);
           border-left: none;
         }

@@ -52,7 +52,7 @@ export default function Project({
           font-size: 1.15rem;
           font-weight: 400;
           letter-spacing: 0.06em;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           transition: color 0.2s;
           line-height: 1;
         }
@@ -77,7 +77,7 @@ export default function Project({
           font-family: 'IBM Plex Sans', sans-serif;
           font-size: 0.8rem;
           font-weight: 300;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           letter-spacing: 0.02em;
           line-height: 1.5;
         }
@@ -87,7 +87,7 @@ export default function Project({
           font-size: 0.6rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: ${darkMode ? 'white' : 'black'};
           white-space: nowrap;
           padding-top: 3px;
           display: flex;

@@ -9,7 +9,6 @@ import Education from "@/components/education"
 import Skills from "@/components/skills"
 import Project from "@/components/project"
 import ContactBar from "@/components/contactBar"
-import VantaBackground from "./vantaBackground";
 import useThemeStore from "@/stores"
 import { useEffect, useState } from "react"
 
@@ -258,8 +257,6 @@ export default function Home() {
         .fade-up-d4 { animation-delay: 0.46s; }
       `}</style>
 
-      <VantaBackground isDarkMode={dm} />
-
       {/* ── Hero background image (fixed, fades on scroll) ── */}
       <div className="hero-bg" style={{ opacity: heroImgOpacity }}>
         <Image
@@ -300,14 +297,9 @@ export default function Home() {
             Isaac
           </h1>
 
-          <p className="hero-sub fade-up fade-up-d2">
-            Developer · Designer · Builder.<br />
-            Crafting thoughtful digital experiences one commit at a time.
-          </p>
-
           <div style={{ marginTop: "2rem" }} className="fade-up fade-up-d3">
             <span className="wip-badge">
-              <span className="wip-dot" />
+              <span className="wip-dot"/>
               Site under construction — expect some bugs
             </span>
           </div>
