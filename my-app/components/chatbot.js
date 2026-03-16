@@ -267,9 +267,16 @@ const GREETING = {
 }
 
 // ── Simulated responses — swap getBotReply for a real API call if needed ──
-async function getBotReply(userMsg) {
-  return "Sorry, this bot is still a work in progress."
+async function getBotReply(messages) {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages }),
+  })
+  const data = await res.json()
+  return data.reply
 }
+
 
 export default function Chatbot() {
   const [open, setOpen]       = useState(false)
@@ -289,16 +296,24 @@ export default function Chatbot() {
     if (open) setTimeout(() => inputRef.current?.focus(), 350)
   }, [open])
 
-  const send = async () => {
-    const text = input.trim()
-    if (!text || typing) return
-    setInput("")
-    setMessages(prev => [...prev, { role: "user", text, time: now() }])
-    setTyping(true)
-    const reply = await getBotReply(text)
-    setTyping(false)
-    setMessages(prev => [...prev, { role: "bot", text: reply, time: now() }])
-  }
+const send = async () => {
+  const text = input.trim()
+  if (!text || typing) return
+  setInput("")
+
+  const newHistory = [...messages, { role: "user", text, time: now() }]
+  setMessages(newHistory)
+  setTyping(true)
+
+  // format for the API (strip the `time` field)
+  const apiMessages = newHistory
+    .filter(m => m.role !== "bot" || m !== messages[0]) // skip greeting
+    .map(m => ({ role: m.role === "bot" ? "assistant" : "user", content: m.text }))
+
+  const reply = await getBotReply(apiMessages)
+  setTyping(false)
+  setMessages(prev => [...prev, { role: "bot", text: reply, time: now() }])
+}
 
   const onKey = e => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send() }
