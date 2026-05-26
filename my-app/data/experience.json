@@ -1,5 +1,17 @@
 [
     {
+        "id": 3,
+        "jobTitle": "Software & AI Engineer Intern",
+        "company": "OCBC",
+        "description": "Working on something exciting.",
+        "startDate": "May 2026",
+        "endDate": "Aug 2026",
+        "companyWeb": "https://www.ocbc.com/",
+        "companyImg": "/company_images/ocbc.png",
+        "zoom": "0.8",
+        "position": "12px 15px"
+    },
+    {
         "id": 1,
         "jobTitle": "AI Engineer Intern",
         "company": "Certis Group",

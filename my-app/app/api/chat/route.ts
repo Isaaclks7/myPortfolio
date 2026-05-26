@@ -7,7 +7,6 @@ Email: kaishaeng@gmail.com
 LinkedIn: linkedin.com/in/isaaclks7
 GitHub: github.com/isaaclks7
 Portfolio: isaaclks.vercel.app
-Available: 12-week internship, May–Aug 2026
 
 ## Education
 National University of Singapore (NUS), Aug 2023 – May 2027
@@ -51,41 +50,97 @@ Hobbies: Sports, gaming, drums, watching shows
 `
 
 const SYSTEM_PROMPT = `You are Isaac's portfolio assistant on his personal website.
-Answer questions about Isaac using ONLY the information below. 
+Answer questions about Isaac using ONLY the information provided below.
+DO NOT mention skills, experience, or projects not explicitly listed.
 If something isn't covered, say you don't have that detail and suggest contacting him directly.
 Keep replies concise (2-4 sentences). Be friendly but professional.
 
 ${ISAAC_CONTEXT}`
 
 export async function POST(req: NextRequest) {
-	const { messages } = await req.json()
+	try {
+		const body = await req.json()
+		const { messages } = body
 
-	const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-		method: "POST",
-		headers: {
-		Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-		"HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "",
-		"X-OpenRouter-Title": "Isaac's Portfolio",
-		"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-		model: "openrouter/hunter-alpha",
-		messages: [
-			{ role: "system", content: SYSTEM_PROMPT },
-			...messages,
-		],
-		}),
-	})
+		// Validate input
+		if (!Array.isArray(messages)) {
+			return NextResponse.json(
+				{ reply: "Invalid request format." },
+				{ status: 400 }
+			)
+		}
 
-	const data = await response.json()
-	if (!response.ok) {
-		console.error("OpenRouter error:", data)
+		if (messages.length === 0 || messages.length > 50) {
+			return NextResponse.json(
+				{ reply: "Invalid message count." },
+				{ status: 400 }
+			)
+		}
+
+		// Validate each message
+		for (const msg of messages) {
+			if (typeof msg.role !== "string" || typeof msg.content !== "string") {
+				return NextResponse.json(
+					{ reply: "Invalid message format." },
+					{ status: 400 }
+				)
+			}
+			if (msg.role !== "user" && msg.role !== "assistant") {
+				return NextResponse.json(
+					{ reply: "Invalid message role." },
+					{ status: 400 }
+				)
+			}
+			// Limit message content length
+			if (msg.content.length > 2000) {
+				return NextResponse.json(
+					{ reply: "Message too long." },
+					{ status: 400 }
+				)
+			}
+		}
+
+		if (!process.env.OPENROUTER_API_KEY) {
+			console.error("Missing API key")
+			return NextResponse.json(
+				{ reply: "Service unavailable." },
+				{ status: 503 }
+			)
+		}
+
+		const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+				"HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "",
+				"X-OpenRouter-Title": "Isaac's Portfolio",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				model: "openai/gpt-oss-20b:free",
+				messages: [
+					{ role: "system", content: SYSTEM_PROMPT },
+					...messages,
+				],
+			}),
+		})
+
+		const data = await response.json()
+		if (!response.ok) {
+			console.error("OpenRouter error status:", response.status)
+			return NextResponse.json(
+				{ reply: "Sorry, something went wrong. Please try again." },
+				{ status: 500 }
+			)
+		}
+
+		const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't get a response."
+		return NextResponse.json({ reply })
+	} catch (error) {
+		console.error("Chat API error")
 		return NextResponse.json(
 			{ reply: "Sorry, something went wrong. Please try again." },
 			{ status: 500 }
 		)
 	}
-
-	const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't get a response."
-	return NextResponse.json({ reply })
 }

@@ -307,7 +307,7 @@ const send = async () => {
 
   // format for the API (strip the `time` field)
   const apiMessages = newHistory
-    .filter(m => m.role !== "bot" || m !== messages[0]) // skip greeting
+    .filter((_, idx) => idx !== 0) // skip greeting
     .map(m => ({ role: m.role === "bot" ? "assistant" : "user", content: m.text }))
 
   const reply = await getBotReply(apiMessages)

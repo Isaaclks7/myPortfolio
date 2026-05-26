@@ -1,5 +1,18 @@
 [
     {
+        "id": 4,
+        "name": "Smart Plant Monitoring System",
+        "description": "IoT system for remote plant monitoring that tracks environmental conditions and automatically waters plants when needed.",
+        "technologies": "C++, MCX444, ESP32, IPC",
+        "githubLink": "",
+        "photos": [],
+        "photoCaption": [],
+        "vidZoom": [],
+        "vidPosition": [],
+        "startDate": "Mar 2026",
+        "endDate": "May 2026"
+    },
+    {
         "id": 1,
         "name": "Fall Detector",
         "description": "STM32L4S5-based fall detection system that detects fall impacts and confirms falls through post-impact inactivity monitoring.",
