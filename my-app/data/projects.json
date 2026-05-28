@@ -58,7 +58,7 @@
             "1.5",
             "1.6",
             "2.5",
-            "6.3",
+            "3.5",
             "1.4"
         ],
         "vidPosition": [
@@ -68,7 +68,7 @@
             "90px 140px",
             "80px 170px",
             "0px 150px",
-            "63px 40px",
+            "75px 180px",
             "80px 180px"
         ],
         "startDate": "Mar 2025",
@@ -80,38 +80,10 @@
         "description": "CLI Assistant for Nurses to manage patient appointments, tasks, medicine stock and more.",
         "technologies": "Java, OOP, Abstraction, Inheritance",
         "githubLink": "https://github.com/Isaaclks7/tp",
-        "photos": [
-            "/nursesched/add.mp4",
-            "/nursesched/mark.mp4",
-            "/nursesched/delete.mp4",
-            "/nursesched/edit_title.mp4",
-            "/nursesched/edit_time.mp4",
-            "/nursesched/find.mp4"
-        ],
-        "photoCaption": [
-            "Add a task",
-            "Mark a task",
-            "Delete a task",
-            "Edit task's name",
-            "Edit task's due date and time",
-            "Find tasks with keyword(s)"
-        ],
-        "vidZoom": [
-            "1.5",
-            "1.5",
-            "1.5",
-            "1.5",
-            "1.5",
-            "1.5"
-        ],
-        "vidPosition": [
-            "40px 10px",
-            "40px 10px",
-            "40px 10px",
-            "40px 10px",
-            "40px 10px",
-            "40px 10px"
-        ],
+        "photos": [],
+        "photoCaption": [],
+        "vidZoom": [],
+        "vidPosition": [],
         "startDate": "Mar 2025",
         "endDate": "May 2025"
     }

@@ -53,9 +53,38 @@ const SYSTEM_PROMPT = `You are Isaac's portfolio assistant on his personal websi
 Answer questions about Isaac using ONLY the information provided below.
 DO NOT mention skills, experience, or projects not explicitly listed.
 If something isn't covered, say you don't have that detail and suggest contacting him directly.
-Keep replies concise (2-4 sentences). Be friendly but professional.
+
+IMPORTANT: Keep replies brief and summarized (1-2 sentences max). Do NOT copy or repeat large blocks of text verbatim.
+Synthesize information naturally into conversational responses. Be friendly but professional.
 
 ${ISAAC_CONTEXT}`
+
+const MODELS = [
+	"nvidia/nemotron-3-super-120b-a12b:free",
+	"openai/gpt-oss-20b:free",
+	"mistralai/mistral-7b-free",
+]
+
+async function callOpenRouter(model: string, messages: any[]) {
+	const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+			"HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "",
+			"X-OpenRouter-Title": "Isaac's Portfolio",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			model,
+			messages: [
+				{ role: "system", content: SYSTEM_PROMPT },
+				...messages,
+			],
+		}),
+	})
+
+	return { response, data: await response.json() }
+}
 
 export async function POST(req: NextRequest) {
 	try {
@@ -108,34 +137,26 @@ export async function POST(req: NextRequest) {
 			)
 		}
 
-		const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-				"HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "",
-				"X-OpenRouter-Title": "Isaac's Portfolio",
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				model: "openai/gpt-oss-20b:free",
-				messages: [
-					{ role: "system", content: SYSTEM_PROMPT },
-					...messages,
-				],
-			}),
-		})
-
-		const data = await response.json()
-		if (!response.ok) {
-			console.error("OpenRouter error status:", response.status)
-			return NextResponse.json(
-				{ reply: "Sorry, something went wrong. Please try again." },
-				{ status: 500 }
-			)
+		// Try each model in sequence until one succeeds
+		for (const model of MODELS) {
+			try {
+				const { response, data } = await callOpenRouter(model, messages)
+				if (response.ok) {
+					const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't get a response."
+					return NextResponse.json({ reply })
+				}
+				console.warn(`Model ${model} failed with status ${response.status}`, data)
+			} catch (error) {
+				console.warn(`Model ${model} failed with error:`, error)
+			}
 		}
 
-		const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't get a response."
-		return NextResponse.json({ reply })
+		// All models failed
+		console.error("All models exhausted")
+		return NextResponse.json(
+			{ reply: "Sorry, something went wrong. Please try again." },
+			{ status: 500 }
+		)
 	} catch (error) {
 		console.error("Chat API error")
 		return NextResponse.json(

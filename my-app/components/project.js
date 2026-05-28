@@ -218,9 +218,6 @@ export default function Project({
               <PhotoViewer
                 photos={photos}
                 captions={captions}
-                zoom={vidZoom}
-                position={vidPosition}
-                width={width}
               />
             )}
           </div>
