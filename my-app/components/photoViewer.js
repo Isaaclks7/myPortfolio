@@ -7,7 +7,6 @@ export default function PhotoViewer({ photos, captions }) {
   const [loadedIndices, setLoadedIndices] = useState(new Set([0]))
   const [videoVisible, setVideoVisible] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(false)
   const mediaRef = useRef(null)
   const touchStartX = useRef(null)
   const touchStartY = useRef(null)
@@ -66,7 +65,6 @@ export default function PhotoViewer({ photos, captions }) {
     const handleKey = (e) => {
       if (e.key === "ArrowLeft") navigate("prev")
       if (e.key === "ArrowRight") navigate("next")
-      if (e.key === "Escape") setIsFullscreen(false)
     }
     window.addEventListener("keydown", handleKey)
     return () => window.removeEventListener("keydown", handleKey)
@@ -159,16 +157,9 @@ export default function PhotoViewer({ photos, captions }) {
         .pv-controls {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           gap: 1rem;
         }
-
-        .pv-nav-group {
-          display: flex;
-          gap: 0.5rem;
-          align-items: center;
-        }
-
         .pv-nav {
           width: 40px;
           height: 40px;
@@ -194,32 +185,6 @@ export default function PhotoViewer({ photos, captions }) {
           transform: scale(0.96);
         }
         .pv-nav svg {
-          width: 14px;
-          height: 14px;
-          stroke-width: 2;
-        }
-
-        .pv-fullscreen-btn {
-          width: 40px;
-          height: 40px;
-          border-radius: 8px;
-          border: 1px solid var(--border);
-          background: var(--surface);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: var(--muted);
-          transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
-          padding: 0;
-        }
-        .pv-fullscreen-btn:hover {
-          background: var(--text);
-          color: var(--bg);
-          border-color: var(--text);
-          transform: scale(1.08);
-        }
-        .pv-fullscreen-btn svg {
           width: 14px;
           height: 14px;
           stroke-width: 2;
@@ -318,100 +283,10 @@ export default function PhotoViewer({ photos, captions }) {
           transform: scale(1);
         }
 
-        .pv-fullscreen-modal {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.95);
-          z-index: 1000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 1rem;
-          animation: fadeIn 0.3s ease;
-        }
-
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-
-        .pv-fullscreen-content {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .pv-fullscreen-stage {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          max-width: 90vw;
-          max-height: 85vh;
-          border-radius: 8px;
-          overflow: hidden;
-        }
-
-        .pv-fullscreen-close {
-          position: absolute;
-          top: 1.5rem;
-          right: 1.5rem;
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          border: 1px solid rgba(255,255,255,0.3);
-          background: rgba(0,0,0,0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: white;
-          transition: all 0.2s ease;
-          z-index: 1001;
-        }
-        .pv-fullscreen-close:hover {
-          background: rgba(255,255,255,0.1);
-          border-color: rgba(255,255,255,0.5);
-        }
-        .pv-fullscreen-close svg {
-          width: 20px;
-          height: 20px;
-          stroke-width: 2;
-        }
-
-        .pv-fullscreen-nav {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          border: 1px solid rgba(255,255,255,0.3);
-          background: rgba(0,0,0,0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: white;
-          transition: all 0.2s ease;
-          z-index: 1001;
-          padding: 0;
-        }
-        .pv-fullscreen-nav:hover {
-          background: rgba(255,255,255,0.15);
-          border-color: rgba(255,255,255,0.5);
-          transform: translateY(-50%) scale(1.1);
-        }
-        .pv-fullscreen-nav svg {
-          width: 18px;
-          height: 18px;
-          stroke-width: 2;
-        }
-        .pv-fullscreen-nav.prev { left: 1.5rem; }
-        .pv-fullscreen-nav.next { right: 1.5rem; }
 
         @media (max-width: 768px) {
           .pv-stage-wrapper {
@@ -427,10 +302,9 @@ export default function PhotoViewer({ photos, captions }) {
             min-width: 48px;
           }
           .pv-controls {
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             gap: 0.75rem;
-            padding: 0 1rem;
           }
           .pv-nav {
             width: 44px;
@@ -447,26 +321,6 @@ export default function PhotoViewer({ photos, captions }) {
           .pv-caption {
             font-size: 0.8rem;
             padding: 0.5rem 1rem;
-          }
-          .pv-fullscreen-nav {
-            width: 44px;
-            height: 44px;
-          }
-          .pv-fullscreen-nav svg {
-            width: 18px;
-            height: 18px;
-          }
-          .pv-fullscreen-close {
-            width: 40px;
-            height: 40px;
-            top: 1rem;
-            right: 1rem;
-          }
-          .pv-fullscreen-nav.prev {
-            left: 1rem;
-          }
-          .pv-fullscreen-nav.next {
-            right: 1rem;
           }
         }
 
@@ -490,10 +344,6 @@ export default function PhotoViewer({ photos, captions }) {
             width: 12px;
             height: 12px;
           }
-          .pv-fullscreen-btn {
-            width: 40px;
-            height: 40px;
-          }
           .pv-thumb {
             width: 44px;
             height: 44px;
@@ -502,74 +352,6 @@ export default function PhotoViewer({ photos, captions }) {
         }
       `}</style>
 
-      {isFullscreen && (
-        <div className="pv-fullscreen-modal" onClick={() => setIsFullscreen(false)}>
-          <div className="pv-fullscreen-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="pv-fullscreen-close"
-              onClick={() => setIsFullscreen(false)}
-              aria-label="Close"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-
-            <div className="pv-fullscreen-stage" ref={mediaRef}>
-              {!isLoaded && <div className="pv-skeleton" />}
-              <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
-                {isVideo ? (
-                  <video
-                    key={`fs-video-${currentIndex}`}
-                    src={isLoaded ? photos[currentIndex] : undefined}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    style={mediaStyle}
-                  />
-                ) : (
-                  isLoaded && (
-                    <Image
-                      key={`fs-img-${currentIndex}`}
-                      src={photos[currentIndex]}
-                      alt={captions?.[currentIndex] || `Photo ${currentIndex + 1}`}
-                      fill
-                      sizes="90vw"
-                      style={mediaStyle}
-                    />
-                  )
-                )}
-              </div>
-            </div>
-
-            {photos.length > 1 && (
-              <>
-                <button
-                  className="pv-fullscreen-nav prev"
-                  onClick={() => navigate("prev")}
-                  aria-label="Previous"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <button
-                  className="pv-fullscreen-nav next"
-                  onClick={() => navigate("next")}
-                  aria-label="Next"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
 
       <div className="pv-root">
         <div className="pv-stage-wrapper">
@@ -578,7 +360,6 @@ export default function PhotoViewer({ photos, captions }) {
             ref={mediaRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            onClick={() => photos.length > 1 && setIsFullscreen(true)}
           >
             {!isLoaded && <div className="pv-skeleton" />}
             <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
@@ -611,40 +392,27 @@ export default function PhotoViewer({ photos, captions }) {
 
         {photos.length > 1 && (
           <div className="pv-controls">
-            <div className="pv-nav-group">
-              <button
-                className="pv-nav"
-                onClick={() => navigate("prev")}
-                aria-label="Previous"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
-              </button>
-              <button
-                className="pv-nav"
-                onClick={() => navigate("next")}
-                aria-label="Next"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-            </div>
+            <button
+              className="pv-nav"
+              onClick={() => navigate("prev")}
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
 
             <div className="pv-counter">{currentIndex + 1} / {photos.length}</div>
 
-            {photos.length > 1 && (
-              <button
-                className="pv-fullscreen-btn"
-                onClick={() => setIsFullscreen(true)}
-                aria-label="Fullscreen"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-                </svg>
-              </button>
-            )}
+            <button
+              className="pv-nav"
+              onClick={() => navigate("next")}
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
           </div>
         )}
 

@@ -51,26 +51,6 @@
             "'LOSE' scrolling message",
             "Idle screen design"
         ],
-        "vidZoom": [
-            "1.5",
-            "1.5",
-            "1.45",
-            "1.5",
-            "1.6",
-            "2.5",
-            "3.5",
-            "1.4"
-        ],
-        "vidPosition": [
-            "80px 140px",
-            "80px 170px",
-            "80px 200px",
-            "90px 140px",
-            "80px 170px",
-            "0px 150px",
-            "75px 180px",
-            "80px 180px"
-        ],
         "startDate": "Mar 2025",
         "endDate": "May 2025"
     },
