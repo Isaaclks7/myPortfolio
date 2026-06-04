@@ -5,8 +5,15 @@
         "description": "IoT system for remote plant monitoring that tracks environmental conditions and automatically waters plants when needed.",
         "technologies": "C++, MCX444, ESP32, IPC",
         "githubLink": "",
-        "photos": [],
-        "photoCaption": [],
+        "photos": [
+            "/plant_monitor/plant_report1.png",
+            "/plant_monitor/plant_report2.png"
+        ],
+        "photoCaption": [
+            "Plant monitoring system dashboard",
+            "Environmental condition analytics"
+        ],
+        "aspectRatio": "16/9",
         "vidZoom": [],
         "vidPosition": [],
         "startDate": "Mar 2026",
@@ -51,6 +58,7 @@
             "'LOSE' scrolling message",
             "Idle screen design"
         ],
+        "aspectRatio": "1",
         "startDate": "Mar 2025",
         "endDate": "May 2025"
     },

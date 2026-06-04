@@ -2,14 +2,29 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import Image from "next/image"
 
-export default function PhotoViewer({ photos, captions }) {
+export default function PhotoViewer({ photos, captions, aspectRatio = 1, imagePositions = [] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loadedIndices, setLoadedIndices] = useState(new Set([0]))
   const [videoVisible, setVideoVisible] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [zoomed, setZoomed] = useState(false)
   const mediaRef = useRef(null)
   const touchStartX = useRef(null)
   const touchStartY = useRef(null)
+
+  // Calculate numeric aspect ratio
+  const parseAspectRatio = (ar) => {
+    if (typeof ar === 'number') return ar
+    if (typeof ar === 'string') {
+      if (ar.includes('/')) {
+        const [a, b] = ar.split('/').map(x => parseFloat(x))
+        return a / b
+      }
+      return parseFloat(ar)
+    }
+    return 1
+  }
+  const numericAspectRatio = parseAspectRatio(aspectRatio)
 
   const preloadMedia = useCallback((idx) => {
     setLoadedIndices(prev => {
@@ -65,6 +80,7 @@ export default function PhotoViewer({ photos, captions }) {
     const handleKey = (e) => {
       if (e.key === "ArrowLeft") navigate("prev")
       if (e.key === "ArrowRight") navigate("next")
+      if (e.key === "Escape") setZoomed(false)
     }
     window.addEventListener("keydown", handleKey)
     return () => window.removeEventListener("keydown", handleKey)
@@ -94,10 +110,12 @@ export default function PhotoViewer({ photos, captions }) {
   const mediaStyle = {
     width: "100%",
     height: "100%",
-    objectFit: "cover",
-    objectPosition: "center",
+    objectFit: numericAspectRatio > 1.5 ? "contain" : "cover",
+    objectPosition: imagePositions?.[currentIndex] || "center",
     transition: "opacity 0.25s cubic-bezier(0.22,1,0.36,1)",
     opacity: isTransitioning ? 0 : 1,
+    background: numericAspectRatio > 1.5 ? "white" : undefined,
+    cursor: "zoom-in",
   }
 
   return (
@@ -114,21 +132,96 @@ export default function PhotoViewer({ photos, captions }) {
         .pv-stage-wrapper {
           position: relative;
           width: 100%;
-          max-width: 550px;
+          max-width: ${numericAspectRatio > 1.5 ? 'min(900px, 90vw)' : 'min(450px, 90vw)'};
           margin: 0 auto;
+        }
+        .pv-lightbox {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.8);
+          z-index: 9999;
+          padding: 1rem;
+        }
+        .pv-lightbox-content {
+          position: relative;
+          width: min(90vw, 900px);
+          max-height: 90vh;
+          border-radius: 18px;
+          overflow: hidden;
+          background: white;
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+        }
+        .pv-lightbox-close {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 36px;
+          height: 36px;
+          border: none;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 1;
         }
 
         .pv-stage {
           position: relative;
           width: 100%;
-          aspect-ratio: 1;
+          aspect-ratio: ${numericAspectRatio};
           border-radius: 12px;
           overflow: hidden;
           background: var(--surface);
           border: 1px solid var(--border);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          cursor: ${photos.length > 1 ? 'pointer' : 'default'};
+          cursor: ${!isVideo ? 'zoom-in' : photos.length > 1 ? 'pointer' : 'default'};
           transition: box-shadow 0.3s ease;
+        }
+        .pv-stage.zoomable:hover {
+          box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+        }
+        .pv-lightbox {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.8);
+          z-index: 9999;
+          padding: 1rem;
+        }
+        .pv-lightbox-content {
+          position: relative;
+          width: min(90vw, 900px);
+          max-height: 90vh;
+          border-radius: 18px;
+          overflow: hidden;
+          background: white;
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+        }
+        .pv-lightbox-close {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 36px;
+          height: 36px;
+          border: none;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 1;
         }
 
         .pv-stage:hover {
@@ -214,7 +307,7 @@ export default function PhotoViewer({ photos, captions }) {
           text-align: center;
           letter-spacing: 0.02em;
           line-height: 1.6;
-          max-width: 550px;
+          max-width: ${numericAspectRatio > 1.5 ? '900px' : '450px'};
           margin: 0 auto;
           padding: 0.5rem 0;
         }
@@ -224,7 +317,7 @@ export default function PhotoViewer({ photos, captions }) {
           gap: 8px;
           align-items: center;
           justify-content: center;
-          max-width: 550px;
+          max-width: ${numericAspectRatio > 1.5 ? '900px' : '450px'};
           flex-wrap: wrap;
           margin: 0 auto;
           padding: 0 1rem;
@@ -354,15 +447,24 @@ export default function PhotoViewer({ photos, captions }) {
 
 
       <div className="pv-root">
-        <div className="pv-stage-wrapper">
+        <div 
+          className="pv-stage-wrapper"
+          style={{
+            maxWidth: numericAspectRatio > 1.5 ? 'min(900px, 90vw)' : 'min(450px, 90vw)'
+          }}
+        >
           <div
-            className="pv-stage"
+            className="pv-stage zoomable"
             ref={mediaRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
+            onClick={() => setZoomed(true)}
+            style={{
+              aspectRatio: numericAspectRatio
+            }}
           >
             {!isLoaded && <div className="pv-skeleton" />}
-            <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
+            <div style={{ width: "100%", height: "100%", overflow: "hidden", background: numericAspectRatio > 1.5 ? "white" : "transparent" }}>
               {isVideo ? (
                 <video
                   key={`video-${currentIndex}`}
@@ -381,7 +483,9 @@ export default function PhotoViewer({ photos, captions }) {
                     src={photos[currentIndex]}
                     alt={captions?.[currentIndex] || `Photo ${currentIndex + 1}`}
                     fill
-                    sizes="(max-width: 768px) 100vw, 550px"
+                    sizes={numericAspectRatio > 1.5 ? "(max-width: 768px) 100vw, 900px" : "(max-width: 768px) 100vw, 450px"}
+                    quality={90}
+                    priority={currentIndex === 0}
                     style={mediaStyle}
                   />
                 )
@@ -413,6 +517,42 @@ export default function PhotoViewer({ photos, captions }) {
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </button>
+          </div>
+        )}
+
+        {zoomed && (
+          <div className="pv-lightbox" onClick={() => setZoomed(false)}>
+            <div className="pv-lightbox-content" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                className="pv-lightbox-close"
+                onClick={() => setZoomed(false)}
+                aria-label="Close zoom"
+              >
+                ×
+              </button>
+              <div style={{ position: 'relative', width: '100%', height: '70vh', background: 'white' }}>
+                {isVideo ? (
+                  <video
+                    src={photos[currentIndex]}
+                    controls
+                    autoPlay
+                    muted={false}
+                    playsInline
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', background: 'black' }}
+                  />
+                ) : (
+                  <Image
+                    src={photos[currentIndex]}
+                    alt={captions?.[currentIndex] || `Photo ${currentIndex + 1}`}
+                    fill
+                    sizes="90vw"
+                    quality={90}
+                    style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  />
+                )}
+              </div>
+            </div>
           </div>
         )}
 

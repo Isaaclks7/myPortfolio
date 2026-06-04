@@ -4,7 +4,7 @@ import useThemeStore from "@/stores"
 import PhotoViewer from "./photoViewer"
 
 export default function Project({
-  name, description, technologies, photos, captions, startDate, endDate, vidZoom, vidPosition, width, githubLink
+  name, description, technologies, photos, captions, startDate, endDate, vidZoom, vidPosition, width, githubLink, aspectRatio, imagePositions
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const { darkMode } = useThemeStore()
@@ -218,6 +218,8 @@ export default function Project({
               <PhotoViewer
                 photos={photos}
                 captions={captions}
+                aspectRatio={aspectRatio || 1}
+                imagePositions={imagePositions}
               />
             )}
           </div>

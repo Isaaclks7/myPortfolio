@@ -391,6 +391,8 @@ export default function Home() {
               vidZoom={item.vidZoom}
               vidPosition={item.vidPosition}
               width={item.width}
+              aspectRatio={item.aspectRatio}
+              imagePositions={item.imagePositions}
             />
           ))}
         </section>
